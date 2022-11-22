@@ -1,7 +1,8 @@
 "use strict";
+// eslint-disable-next-line no-undef
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var router = (0, express_1.Router)();
+import { Router } from "express";
+var router = (0, Router)();
 // Register User
 router.post('/api/auth/register', function (req, res) {
     res.send('Register');
@@ -11,4 +12,4 @@ router.post('/api/auth/register', function (req, res) {
 // Get all Users
 // Get all sellers
 // Get all buyers
-module.exports = router;
+export default router;
