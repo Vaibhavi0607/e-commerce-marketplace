@@ -8,21 +8,21 @@ var userSchema = new mongoose_1.default.Schema({
     username: String,
     password: {
         type: String,
-        required: true
+        required: true,
     },
     userType: {
         type: String,
         enum: ['SELLER', 'BUYER'],
-        default: 'BUYER'
+        default: 'BUYER',
     },
     email: {
         type: String,
-        required: true
+        required: true,
     },
     address: String,
     catalog: {
         type: mongoose_1.default.SchemaTypes.ObjectId,
-        ref: 'Catalog'
-    }
+        ref: 'Catalog',
+    },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 module.exports = mongoose_1.default.model('Users', userSchema);
