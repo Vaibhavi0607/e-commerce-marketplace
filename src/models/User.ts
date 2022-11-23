@@ -2,7 +2,10 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
   {
-    username: String,
+    username: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
@@ -11,18 +14,19 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['SELLER', 'BUYER'],
       default: 'BUYER',
+      required: true
     },
     email: {
       type: String,
       required: true,
     },
     address: String,
-    catalog: {
+    catalog: [{
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'Catalog',
-    },
+    }],
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
 
-module.exports = mongoose.model('Users', userSchema);
+export const User =  mongoose.model('Users', userSchema);

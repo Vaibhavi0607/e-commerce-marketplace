@@ -6,17 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var dotenv_1 = __importDefault(require("dotenv"));
+var body_parser_1 = __importDefault(require("body-parser"));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
-// const mongooseOptions = { 
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useCreateIndex: true,
-//   useFindAndModify: false
-// };
+app.use(express_1.default.json());
 // Import Routes
 var user_router_1 = require("./app/Users/user.router");
 // Routes Middleware
+console.log('using middleware');
+app.use(body_parser_1.default.json());
 app.use('/users', user_router_1.userRouter);
 // Initialize db
 mongoose_1.default.connect(process.env.MONGOURL, function () {

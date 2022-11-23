@@ -1,14 +1,17 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import bodyparser from 'body-parser';
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 
 // Import Routes
 import { userRouter } from './app/Users/user.router';
 
 // Routes Middleware
+app.use(bodyparser.json());
 app.use('/users', userRouter);
 
 // Initialize db
