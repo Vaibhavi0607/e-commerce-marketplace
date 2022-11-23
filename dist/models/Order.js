@@ -12,13 +12,13 @@ var mongoose_1 = __importDefault(require("mongoose"));
 var orderSchema = new mongoose_1.default.Schema({
     buyerId: {
         type: mongoose_1.default.SchemaTypes.ObjectId,
-        ref: 'Users'
+        ref: 'Users',
     },
     orderedProducts: [
         {
             type: mongoose_1.default.SchemaTypes.ObjectId,
-            ref: 'Product'
-        }
-    ]
+            ref: 'Product',
+        },
+    ],
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 module.exports = mongoose_1.default.model('Order', orderSchema);
