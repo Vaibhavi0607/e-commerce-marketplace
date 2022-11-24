@@ -17,6 +17,10 @@
     "plugins": [
         "@typescript-eslint"
     ],
+    "excludes": [
+        "dist",
+        "node_modules"
+    ],
     "rules": {
     }
 }

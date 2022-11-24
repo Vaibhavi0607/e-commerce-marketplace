@@ -25,9 +25,5 @@ var userSchema = new mongoose_1.default.Schema({
         required: true,
     },
     address: String,
-    catalog: [{
-            type: mongoose_1.default.SchemaTypes.ObjectId,
-            ref: 'Catalog',
-        }],
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 exports.User = mongoose_1.default.model('Users', userSchema);

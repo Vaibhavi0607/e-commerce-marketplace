@@ -21,10 +21,6 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     address: String,
-    catalog: [{
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'Catalog',
-    }],
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
