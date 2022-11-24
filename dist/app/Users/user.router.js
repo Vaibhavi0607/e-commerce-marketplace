@@ -204,35 +204,4 @@ router.get('/api/list-of-buyers', function (req, res) { return __awaiter(void 0,
         }
     });
 }); });
-//Get catalog of seller by seller id
-router.get('/api/buyer/seller-catalog/:seller_id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, error_7;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, User_1.User.findById(req.params.seller_id)];
-            case 1:
-                user = _a.sent();
-                if (user) {
-                    if (user.userType !== 'SELLER') {
-                        res.status(400).json('Mentioned ID is not seller');
-                    }
-                    else if (user.catalog && user.catalog.length !== 0) {
-                        res.status(200).json(user.catalog);
-                    }
-                    res.status(400).json('No products found for mentioned seller');
-                }
-                else {
-                    res.status(400).json('User not found');
-                }
-                return [3 /*break*/, 3];
-            case 2:
-                error_7 = _a.sent();
-                res.status(400).json('Error in fetching catalog of seller');
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
 exports.userRouter = router;

@@ -12,10 +12,11 @@ var app = (0, express_1.default)();
 app.use(express_1.default.json());
 // Import Routes
 var user_router_1 = require("./app/Users/user.router");
+var catalog_router_1 = require("./app/Catalogs/catalog.router");
 // Routes Middleware
-console.log('using middleware');
 app.use(body_parser_1.default.json());
 app.use('/users', user_router_1.userRouter);
+app.use('/catalog', catalog_router_1.catalogRouter);
 // Initialize db
 mongoose_1.default.connect(process.env.MONGOURL, function () {
     console.log('Connected to database');

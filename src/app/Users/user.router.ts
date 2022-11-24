@@ -95,23 +95,4 @@ router.get('/api/list-of-buyers', async (req, res) => {
   }
 });
 
-//Get catalog of seller by seller id
-router.get('/api/buyer/seller-catalog/:seller_id', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.seller_id);
-    if (user) {
-      if (user.userType !== 'SELLER') {
-        res.status(400).json('Mentioned ID is not seller');
-      } else if (user.catalog && user.catalog.length !== 0) {
-        res.status(200).json(user.catalog);
-      }
-      res.status(400).json('No products found for mentioned seller');
-    } else {
-      res.status(400).json('User not found');
-    }
-  } catch (error) {
-    res.status(400).json('Error in fetching catalog of seller');
-  }
-});
-
 export const userRouter = router;
