@@ -16,7 +16,7 @@ const productShema = new mongoose.Schema(
       ref: 'Users',
       required: true,
     },
-    catalog: {
+    catalogId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'Catalog',
       required: true,
@@ -25,4 +25,4 @@ const productShema = new mongoose.Schema(
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
 
-module.exports = mongoose.model('Product', productShema);
+export const Product = mongoose.model('Product', productShema);
