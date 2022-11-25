@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Product = void 0;
 var mongoose_1 = __importDefault(require("mongoose"));
 var productShema = new mongoose_1.default.Schema({
     productName: {
@@ -19,10 +20,10 @@ var productShema = new mongoose_1.default.Schema({
         ref: 'Users',
         required: true,
     },
-    catalog: {
+    catalogId: {
         type: mongoose_1.default.SchemaTypes.ObjectId,
         ref: 'Catalog',
         required: true,
     },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
-module.exports = mongoose_1.default.model('Product', productShema);
+exports.Product = mongoose_1.default.model('Product', productShema);

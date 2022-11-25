@@ -13,10 +13,14 @@ app.use(express_1.default.json());
 // Import Routes
 var user_router_1 = require("./app/Users/user.router");
 var catalog_router_1 = require("./app/Catalogs/catalog.router");
+var product_router_1 = require("./app/Products/product.router");
+var order_router_1 = require("./app/Orders/order.router");
 // Routes Middleware
 app.use(body_parser_1.default.json());
 app.use('/users', user_router_1.userRouter);
 app.use('/catalog', catalog_router_1.catalogRouter);
+app.use('/product', product_router_1.productRouter);
+app.use('/order', order_router_1.orderRouter);
 // Initialize db
 mongoose_1.default.connect(process.env.MONGOURL, function () {
     console.log('Connected to database');

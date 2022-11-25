@@ -11,7 +11,7 @@ var catalogSchema = new mongoose_1.default.Schema({
         ref: 'Users',
     },
     userType: {
-        type: mongoose_1.default.SchemaTypes.ObjectId,
+        type: mongoose_1.default.SchemaTypes.String,
         ref: 'Users',
         required: true,
     },
