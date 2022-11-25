@@ -58,7 +58,7 @@ router.delete('/api/remove/:userId', async (req, res) => {
 });
 
 // Get all Users
-router.get('/api/getAllUsers', async (req, res) => {
+router.get('/api/get-all-users', async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);

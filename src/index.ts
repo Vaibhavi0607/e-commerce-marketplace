@@ -10,11 +10,13 @@ app.use(express.json());
 // Import Routes
 import { userRouter } from './app/Users/user.router';
 import { catalogRouter } from './app/Catalogs/catalog.router';
+import { productRouter } from './app/Products/product.router';
 
 // Routes Middleware
 app.use(bodyparser.json());
 app.use('/users', userRouter);
 app.use('/catalog', catalogRouter);
+app.use('/product', productRouter);
 
 // Initialize db
 mongoose.connect(process.env.MONGOURL, () => {
