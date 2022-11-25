@@ -1,8 +1,3 @@
-/**
- * Buyer
- * orderProducts[]
- *
- */
 import mongoose from 'mongoose';
 
 const orderSchema = new mongoose.Schema(
@@ -21,4 +16,4 @@ const orderSchema = new mongoose.Schema(
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
 
-module.exports = mongoose.model('Order', orderSchema);
+export const Order = mongoose.model('Order', orderSchema);

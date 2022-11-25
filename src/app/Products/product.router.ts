@@ -4,7 +4,7 @@ import { Product } from '../../models/Products';
 const router = Router();
 
 //Create product and add to catalog
-router.post('/api/add-product', async (req, res) => {
+router.post('/api/add-product', async (req, res) => {//TODO: check if user to create product is seller only
     const productData = new Product({
         productName: req.body.productName,
         productDescription: req.body.productDescription,
