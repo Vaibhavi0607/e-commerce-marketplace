@@ -18,9 +18,9 @@ router.post('/api/auth/register', async (req, res) => {
       catalog: req.body.catalog   
     });
     await data.save();
-    res.status(201).json('User created');
+    res.status(201).json({ 'message': 'User created' });
   } catch(error: any) {
-    res.status(400).json(`Error in creating user: ${error.message}`);
+    res.status(400).json({ 'message': `Error in creating user: ${error.message}` });
   }
 });
 
@@ -29,31 +29,32 @@ router.post('/api/auth/login', async (req, res) => {
   let password = '';
   const existingUser = await User.findOne({username: req.body.username});
   if (!existingUser) {
-    res.status(400).json('User not found');
+    return res.status(400).json({ 'message': 'User not found' });
   } else {
     password = existingUser.password;
   }
   try {
     if(await bcrypt.compare(req.body.password, password)) {
-      res.status(200).json('Logged in successfully');
+      res.status(200).json({ 'message': 'Logged in successfully' });
     } else {
-      res.status(400).json('Password did not match');
+      return res.status(400).json({ 'message': 'Password did not match' });
     }
   } catch (error: any) {
-    res.status(400).json(`Error in logging user: ${error.message}`);
+    res.status(400).json({ 'message': `Error in logging user: ${error.message}` });
   }
 });
 
 // Delete User by user id
 router.delete('/api/remove/:userId', async (req, res) => {
   try {
-    const deleteUser = await User.deleteOne({ _id: req.params.userId });
-    if (!deleteUser) {
-      res.status(400).json('User not found to delete');
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(400).json({ 'message': 'User not found' });
     }
-    res.status(200).json(deleteUser);
+    const deleteUser = await User.deleteOne({ _id: req.params.userId });
+    res.status(200).json({ 'message': deleteUser });
   } catch (error: any) {
-    res.status(400).json(error.message);
+    res.status(400).json({ 'message': error.message });
   }
 });
 
@@ -61,9 +62,9 @@ router.delete('/api/remove/:userId', async (req, res) => {
 router.get('/api/get-all-users', async (req, res) => {
   try {
     const users = await User.find();
-    res.status(200).json(users);
+    res.status(200).json({ 'message': users });
   } catch (error: any) {
-    res.status(400).json(`Error in getting all users: ${error.message}`);
+    res.status(400).json({ 'message': `Error in getting all users: ${error.message}` });
   }
 });
 
@@ -72,12 +73,12 @@ router.get('/api/buyer/list-of-sellers', async (req, res) => {
   try {
     const sellers = await User.find({ userType: 'SELLER'});
     if (sellers.length !== 0) {
-      res.status(200).json(sellers);
+      res.status(200).json({ 'message': sellers });
     } else {
-      res.status(400).json('No sellers found');
+      res.status(400).json({ 'message': 'No sellers found' });
     }
   } catch (error: any) {
-    res.status(400).json(`Error in getting sellers: ${error.message}`);
+    res.status(400).json({ 'message': `Error in getting sellers: ${error.message}` });
   }
 });
 
@@ -86,12 +87,24 @@ router.get('/api/list-of-buyers', async (req, res) => {
   try {
     const buyers = await User.find({ userType: 'BUYER'});
     if (buyers.length !== 0) {
-      res.status(200).json(buyers);
+      res.status(200).json({ 'message': buyers });
     } else {
-      res.status(400).json('No buyers found');
+      res.status(400).json({ 'message': 'No buyers found' });
     }
   } catch (error: any) {
-    res.status(400).json(`Error in getting sellers: ${error.message}`);
+    res.status(400).json({ 'message': `Error in getting sellers: ${error.message}` });
+  }
+});
+
+// Get a specific user
+router.get('/api/user/:user_id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.user_id);
+    if (user) {
+      res.status(200).json({ 'message': user });
+    }
+  } catch (error: any) {
+    res.status(500).json({ 'message': `Error in fetching user: ${error.message}` });
   }
 });
 

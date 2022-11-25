@@ -86,7 +86,7 @@ router.post('/api/auth/login', function (req, res) { return __awaiter(void 0, vo
             case 1:
                 existingUser = _a.sent();
                 if (!existingUser) {
-                    res.status(400).json('User not found');
+                    return [2 /*return*/, res.status(400).json('User not found')];
                 }
                 else {
                     password = existingUser.password;
@@ -100,7 +100,7 @@ router.post('/api/auth/login', function (req, res) { return __awaiter(void 0, vo
                     res.status(200).json('Logged in successfully');
                 }
                 else {
-                    res.status(400).json('Password did not match');
+                    return [2 /*return*/, res.status(400).json('Password did not match')];
                 }
                 return [3 /*break*/, 5];
             case 4:
@@ -113,29 +113,32 @@ router.post('/api/auth/login', function (req, res) { return __awaiter(void 0, vo
 }); });
 // Delete User by user id
 router.delete('/api/remove/:userId', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var deleteUser, error_3;
+    var user, deleteUser, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, User_1.User.deleteOne({ _id: req.params.userId })];
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, User_1.User.findById(req.params.userId)];
             case 1:
-                deleteUser = _a.sent();
-                if (!deleteUser) {
-                    res.status(400).json('User not found to delete');
+                user = _a.sent();
+                if (!user) {
+                    return [2 /*return*/, res.status(400).json('User not found')];
                 }
-                res.status(200).json(deleteUser);
-                return [3 /*break*/, 3];
+                return [4 /*yield*/, User_1.User.deleteOne({ _id: req.params.userId })];
             case 2:
+                deleteUser = _a.sent();
+                res.status(200).json(deleteUser);
+                return [3 /*break*/, 4];
+            case 3:
                 error_3 = _a.sent();
                 res.status(400).json(error_3.message);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
 // Get all Users
-router.get('/api/getAllUsers', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.get('/api/get-all-users', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var users, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -199,6 +202,28 @@ router.get('/api/list-of-buyers', function (req, res) { return __awaiter(void 0,
             case 2:
                 error_6 = _a.sent();
                 res.status(400).json("Error in getting sellers: ".concat(error_6.message));
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+// Get a specific user
+router.get('/api/user/:user_id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, error_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, User_1.User.findById(req.params.user_id)];
+            case 1:
+                user = _a.sent();
+                if (user) {
+                    res.status(200).json(user);
+                }
+                return [3 /*break*/, 3];
+            case 2:
+                error_7 = _a.sent();
+                res.status(500).json("Error in fetching user: ".concat(error_7.message));
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

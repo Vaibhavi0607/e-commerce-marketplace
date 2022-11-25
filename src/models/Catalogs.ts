@@ -7,7 +7,7 @@ const catalogSchema = new mongoose.Schema(
       ref: 'Users',
     },
     userType: {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.SchemaTypes.String,
       ref: 'Users',
       required: true,
     },
