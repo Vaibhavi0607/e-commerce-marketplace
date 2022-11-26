@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['SELLER', 'BUYER'],
       default: 'BUYER',
-      required: true
+      required: true,
     },
     email: {
       type: String,
@@ -23,16 +23,16 @@ const userSchema = new mongoose.Schema(
     address: String,
     catalog: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: 'Catalog'
+      ref: 'Catalog',
     },
     orders: [
       {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: 'Order'
-      }
-    ]
+        ref: 'Order',
+      },
+    ],
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
 
-export const User =  mongoose.model('Users', userSchema);
+export const User = mongoose.model('Users', userSchema);

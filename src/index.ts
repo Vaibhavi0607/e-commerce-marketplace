@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bodyparser from 'body-parser';
+import { logger } from './utils/logger';
 dotenv.config();
 
 const app = express();
@@ -22,9 +23,9 @@ app.use('/order', orderRouter);
 
 // Initialize db
 mongoose.connect(process.env.MONGOURL, () => {
-  console.log('Connected to database');
+  logger.info('Connected to database');
 });
 
-app.listen('3000', () => {
-  console.log('Listening to port 3000');
+export const server = app.listen('3000', () => {
+  logger.info('Listening to port 3000');
 });
