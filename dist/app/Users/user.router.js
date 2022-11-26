@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -43,9 +66,11 @@ exports.userRouter = void 0;
 var express_1 = require("express");
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var User_1 = require("../../models/User");
+var validator = __importStar(require("./user.validator"));
+var logger_1 = require("../../utils/logger");
 var router = (0, express_1.Router)();
 // Register User
-router.post('/api/auth/register', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.post('/api/auth/register', validator.registerUserValidator, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var hashedPassword, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -65,11 +90,11 @@ router.post('/api/auth/register', function (req, res) { return __awaiter(void 0,
                 return [4 /*yield*/, data.save()];
             case 2:
                 _a.sent();
-                res.status(201).json('User created');
+                res.status(201).json({ 'message': 'User created' });
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
-                res.status(400).json("Error in creating user: ".concat(error_1.message));
+                res.status(400).json({ 'message': "Error in creating user: ".concat(error_1.message) });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -86,7 +111,7 @@ router.post('/api/auth/login', function (req, res) { return __awaiter(void 0, vo
             case 1:
                 existingUser = _a.sent();
                 if (!existingUser) {
-                    return [2 /*return*/, res.status(400).json('User not found')];
+                    return [2 /*return*/, res.status(400).json({ 'message': 'User not found' })];
                 }
                 else {
                     password = existingUser.password;
@@ -97,22 +122,22 @@ router.post('/api/auth/login', function (req, res) { return __awaiter(void 0, vo
                 return [4 /*yield*/, bcrypt_1.default.compare(req.body.password, password)];
             case 3:
                 if (_a.sent()) {
-                    res.status(200).json('Logged in successfully');
+                    res.status(200).json({ 'message': 'Logged in successfully' });
                 }
                 else {
-                    return [2 /*return*/, res.status(400).json('Password did not match')];
+                    return [2 /*return*/, res.status(400).json({ 'message': 'Password did not match' })];
                 }
                 return [3 /*break*/, 5];
             case 4:
                 error_2 = _a.sent();
-                res.status(400).json("Error in logging user: ".concat(error_2.message));
+                res.status(400).json({ 'message': "Error in logging user: ".concat(error_2.message) });
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
     });
 }); });
 // Delete User by user id
-router.delete('/api/remove/:userId', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.delete('/api/remove/:userId', validator.userIdValidator, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user, deleteUser, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -122,16 +147,16 @@ router.delete('/api/remove/:userId', function (req, res) { return __awaiter(void
             case 1:
                 user = _a.sent();
                 if (!user) {
-                    return [2 /*return*/, res.status(400).json('User not found')];
+                    return [2 /*return*/, res.status(400).json({ 'message': 'User not found' })];
                 }
                 return [4 /*yield*/, User_1.User.deleteOne({ _id: req.params.userId })];
             case 2:
                 deleteUser = _a.sent();
-                res.status(200).json(deleteUser);
+                res.status(200).json({ 'message': deleteUser });
                 return [3 /*break*/, 4];
             case 3:
                 error_3 = _a.sent();
-                res.status(400).json(error_3.message);
+                res.status(400).json({ 'message': error_3.message });
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -147,11 +172,11 @@ router.get('/api/get-all-users', function (req, res) { return __awaiter(void 0, 
                 return [4 /*yield*/, User_1.User.find()];
             case 1:
                 users = _a.sent();
-                res.status(200).json(users);
+                res.status(200).json({ 'message': users });
                 return [3 /*break*/, 3];
             case 2:
                 error_4 = _a.sent();
-                res.status(400).json("Error in getting all users: ".concat(error_4.message));
+                res.status(400).json({ 'message': "Error in getting all users: ".concat(error_4.message) });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -168,15 +193,15 @@ router.get('/api/buyer/list-of-sellers', function (req, res) { return __awaiter(
             case 1:
                 sellers = _a.sent();
                 if (sellers.length !== 0) {
-                    res.status(200).json(sellers);
+                    res.status(200).json({ 'message': sellers });
                 }
                 else {
-                    res.status(400).json('No sellers found');
+                    res.status(400).json({ 'message': 'No sellers found' });
                 }
                 return [3 /*break*/, 3];
             case 2:
                 error_5 = _a.sent();
-                res.status(400).json("Error in getting sellers: ".concat(error_5.message));
+                res.status(400).json({ 'message': "Error in getting sellers: ".concat(error_5.message) });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -193,37 +218,38 @@ router.get('/api/list-of-buyers', function (req, res) { return __awaiter(void 0,
             case 1:
                 buyers = _a.sent();
                 if (buyers.length !== 0) {
-                    res.status(200).json(buyers);
+                    res.status(200).json({ 'message': buyers });
                 }
                 else {
-                    res.status(400).json('No buyers found');
+                    res.status(400).json({ 'message': 'No buyers found' });
                 }
                 return [3 /*break*/, 3];
             case 2:
                 error_6 = _a.sent();
-                res.status(400).json("Error in getting sellers: ".concat(error_6.message));
+                res.status(400).json({ 'message': "Error in getting sellers: ".concat(error_6.message) });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); });
 // Get a specific user
-router.get('/api/user/:user_id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.get('/api/user/:user_id', validator.userIdValidator, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user, error_7;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
+                logger_1.logger.info('Fetching user by id');
                 return [4 /*yield*/, User_1.User.findById(req.params.user_id)];
             case 1:
                 user = _a.sent();
                 if (user) {
-                    res.status(200).json(user);
+                    res.status(200).json({ 'message': user });
                 }
                 return [3 /*break*/, 3];
             case 2:
                 error_7 = _a.sent();
-                res.status(500).json("Error in fetching user: ".concat(error_7.message));
+                res.status(500).json({ 'message': "Error in fetching user: ".concat(error_7.message) });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
