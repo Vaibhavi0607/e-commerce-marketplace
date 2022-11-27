@@ -11,7 +11,8 @@ chai.use(chaiHTTP);
 
 describe('Product', () => {
   let addProductPayload: any;
-  let userId: any;
+  let productId: any;
+  let catalogId: any;
 
   beforeEach(() => {
     addProductPayload = {
@@ -24,7 +25,7 @@ describe('Product', () => {
   });
 
   after(async () => {
-    await request(server).delete(`/remove/${userId}`);
+    await request(server).delete(`/product/api/remove-product/${productId}/catalog/${catalogId}`);
   });
 
   describe('Add product', () => {
@@ -36,7 +37,8 @@ describe('Product', () => {
 
     it('Add product', async () => {
       const res = await request(server).post('/product/api/add-product').send(addProductPayload);
-      userId = res.body._id;
+      productId = res.body.message._id;
+      catalogId = res.body.message.catalogId;
       expect(res.status).to.equal(200);
     });
   });

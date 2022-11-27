@@ -11,7 +11,7 @@ chai.use(chaiHTTP);
 
 describe('Order', () => {
   let addOrderPayload: any;
-  let userId: any;
+  let orderId: any;
 
   beforeEach(() => {
     addOrderPayload = {
@@ -21,7 +21,7 @@ describe('Order', () => {
   });
 
   after(async () => {
-    await request(server).delete(`/remove/${userId}`);
+    await request(server).delete(`/order/api/remove/order/${orderId}`);
   });
 
   describe('Add Order', () => {
@@ -33,6 +33,7 @@ describe('Order', () => {
 
     it('Add Order', async () => {
       const res = await request(server).post('/order/api/buyer/create-order/6380fda631d66c76ca87fd0b').send(addOrderPayload);
+      orderId = res.body.message._id;
       expect(res.status).to.equal(200);
     });
   });

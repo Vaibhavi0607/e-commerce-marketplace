@@ -13,7 +13,7 @@ const requestId = uuidv4();
  */
 const colorMessage = (level: string, message: string): string => {
   if (level === 'INFO') {
-    message = chalk.blue(message);
+    message = chalk.green(message);
   } else if (level === 'WARN') {
     message = chalk.yellow(message);
   } else if (level === 'ERROR') {
