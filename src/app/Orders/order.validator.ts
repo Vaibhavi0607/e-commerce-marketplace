@@ -5,8 +5,10 @@ import { logger } from '../../utils/logger';
 export const addOrderValidator = (req: Request, res: Response, next: NextFunction) => {
   logger.info('Validating order to add');
   const addOrderSchema = Joi.object({
-    buyerId: Joi.string().alphanum().min(15),
-    orderedProducts: Joi.string().alphanum().min(15),
+    body: {
+      buyerId: Joi.string().alphanum().min(15),
+      orderedProducts: Joi.string().alphanum().min(15)
+    }
   }).unknown(true);
   const result = addOrderSchema.validate(req);
   if (result.error) {

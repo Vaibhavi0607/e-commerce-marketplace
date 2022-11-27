@@ -21,14 +21,14 @@ This project is a node.js, typescript based implementation of E-commerce marketp
 - Review order placed and order received by buyer and seller respectively
 
 
-## Frameworks
+## Frameworks and libraries
 
-**Server:** Node, Express, Typescript
+Node, Express, Typescript, mocha, chai, joi
 
 
 ## Setup
 
-- To start with project you need to install npm
+- To start with project you need to install dependencies
 
 ```bash
   npm i
@@ -41,18 +41,31 @@ This project is a node.js, typescript based implementation of E-commerce marketp
    MONGOURL=YOUR_MONGO_URL
 ````
 
+Postman collection:
+
+```bash
+    https://documenter.getpostman.com/view/16894065/2s8Ysuwsgj
+```
+
 ## Entities
 
-- Users
-Two types: buyers and sellers.
+- Users:
+
+Two types- buyers and sellers.
 A user can sign up as a buyer or as a seller.
-- Catalogs
+
+- Catalogs:
+
 A catalog belongs to a seller.
 One seller can have one catalog.
 A catalog consists of Products.
-- Products
+
+- Products:
+
 A product has a name, description, price.
-- Orders
+
+- Orders:
+
 An order can be created by a buyer to purchase items from a seller's catalog.
 An order consists of a list of products.
 

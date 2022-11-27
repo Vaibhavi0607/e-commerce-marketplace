@@ -24,7 +24,7 @@ describe('User', () => {
   });
 
   after(async () => {
-    await request(server).delete(`/remove/${userId}`);
+    await request(server).delete(`/users/api/remove/${userId}`);
   });
 
   describe('Add user', () => {
@@ -36,7 +36,7 @@ describe('User', () => {
 
     it('Add user', async () => {
       const res = await request(server).post('/users/api/auth/register').send(addUserPayload);
-      userId = res.body._id;
+      userId = res.body.message._id;
       expect(res.status).to.equal(201);
     });
   });

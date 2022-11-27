@@ -11,7 +11,7 @@ chai.use(chaiHTTP);
 
 describe('Catalog', () => {
   let addCatalogPayload: any;
-  let userId: any;
+  let catalogId: any;
 
   beforeEach(() => {
     addCatalogPayload = {
@@ -21,7 +21,8 @@ describe('Catalog', () => {
   });
 
   after(async () => {
-    await request(server).delete(`/remove/${userId}`);
+    console.log(catalogId);
+    await request(server).delete(`/catalog/api/remove/seller-catalog/${catalogId}`);
   });
 
   describe('Create catalog', () => {
@@ -32,9 +33,10 @@ describe('Catalog', () => {
     });
 
     it('Create catalog', async () => {
-      const res = await request(server).post('/catalog/api/seller/create-catalog/6380fda631d66c76ca87fd0b').send(addCatalogPayload);
-      userId = res.body._id;
-      expect(res.status).to.equal(500); // Catalog already exists for user
+      const res = await request(server).post('/catalog/api/seller/create-catalog/6381fd32a79787693a2c50e0').send(addCatalogPayload);
+      catalogId = res.body.message._id;
+      console.log(res.body)
+      expect(res.status).to.equal(200); // Catalog already exists for user
     });
   });
 });
